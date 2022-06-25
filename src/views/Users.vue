@@ -44,7 +44,7 @@ export default {
         const { data } = await axios.get('ambassadors');
 
         this.users = data;
-        this.lastPage = Math.ceil(data.length / this.perPage)
+        this.lastPage = Math.ceil(data.length / this.perPage);
     }
 }
 </script>
