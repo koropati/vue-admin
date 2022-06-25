@@ -27,14 +27,30 @@ export default {
             price: 0.0
         }
     },
+    async mounted() {
+        if (this.$route.params.id) {
+            const { data } = await axios.get(`products/${this.$route.params.id}`);
+
+            this.title = data.title;
+            this.description = data.description;
+            this.image = data.image;
+            this.price = data.price;
+        }
+    },
     methods: {
         async submit() {
-            await axios.post('products', {
+            const data = {
                 title: this.title,
                 description: this.description,
                 image: this.image,
                 price: parseFloat(this.price)
-            })
+            };
+            if (this.$route.params.id) {
+                await axios.put(`products/${this.$route.params.id}`, data);
+            } else {
+                await axios.post('products', data);
+            }
+
 
             await this.$router.push('/products')
         }

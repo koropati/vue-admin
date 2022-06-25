@@ -22,6 +22,7 @@ const routes: Array<RouteConfig> = [
       {path: '/users/:id/links', component: Links},
       {path: '/products', component: Products},
       {path: '/products/create', component: ProductForm},
+      {path: '/products/:id/edit', component: ProductForm},
     ]
   }
 ]
