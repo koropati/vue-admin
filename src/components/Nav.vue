@@ -3,15 +3,25 @@
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
 
         <nav class="my-2 my-md-0 mr-md-3">
-            <a href="#" class="p-2 text-white text-decoration-none">{{ user.first_name }} {{ user.last_name }}</a>
-            <a href="#" class="p-2 text-white text-decoration-none"> Sign Out</a>
+            <router-link to="/profile" href="#" class="p-2 text-white text-decoration-none">
+                {{ user.first_name }} {{ user.last_name }}
+            </router-link>
+            <a href="#" class="p-2 text-white text-decoration-none" @click="Logout"> Sign Out</a>
         </nav>
     </header>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: "Nav",
-    props: ['user']
+    props: ['user'],
+    methods: {
+        async Logout() {
+            await axios.post('logout');
+
+            await this.$router.push('/login');
+        }
+    }
 }
 </script>
