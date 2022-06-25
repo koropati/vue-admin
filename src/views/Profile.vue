@@ -3,13 +3,13 @@
         <h3>Account Information</h3>
         <form @submit.prevent="infoSubmit">
             <div class="mb-3">
-                <v-text-field label="First Name" v-model="first_name"></v-text-field>
+                <v-text-field label="First Name" v-model="user.first_name"></v-text-field>
             </div>
             <div class="mb-3">
-                <v-text-field label="Last Name" v-model="last_name"></v-text-field>
+                <v-text-field label="Last Name" v-model="user.last_name"></v-text-field>
             </div>
             <div class="mb-3">
-                <v-text-field label="Email" type="email" v-model="email"></v-text-field>
+                <v-text-field label="Email" type="email" v-model="user.email"></v-text-field>
             </div>
             <v-btn color="primary" type="submit">Save</v-btn>
         </form>
@@ -33,27 +33,19 @@ export default {
     name: "Profile",
     data() {
         return {
-            first_name: '',
-            last_name: '',
-            email: '',
             password: '',
             password_confirm: ''
         }
     },
-    async mounted() {
-        const { data } = await axios.get('user');
-
-        this.first_name = data.first_name;
-        this.last_name = data.last_name;
-        this.email = data.email;
-    },
     methods: {
         async infoSubmit() {
-            await axios.put('users/info', {
-                first_name: this.first_name,
-                last_name: this.last_name,
-                email: this.email,
-            })
+            const {data} = await axios.put('users/info', {
+                first_name: this.user.first_name,
+                last_name: this.user.last_name,
+                email: this.user.email,
+            });
+
+            await this.$store.dispatch('setUser', data);
 
         },
         async passwordSubmit() {
@@ -64,6 +56,11 @@ export default {
         }
 
     },
+    computed: {
+        user() {
+            return this.$store.state.user;
+        }
+    }
 
 }
 </script>

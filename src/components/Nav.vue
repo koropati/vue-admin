@@ -15,12 +15,16 @@
 import axios from 'axios'
 export default {
     name: "Nav",
-    props: ['user'],
     methods: {
         async Logout() {
             await axios.post('logout');
 
             await this.$router.push('/login');
+        }
+    },
+    computed: {
+        user() {
+            return this.$store.state.user;
         }
     }
 }
